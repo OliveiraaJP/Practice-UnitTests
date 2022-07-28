@@ -22,4 +22,14 @@ describe("create voucher", () => {
     await voucherService.createVoucher(voucher.code, voucher.discount);
     expect(voucherRepository.createVoucher).toBeCalledTimes(1);
   })
+
+  it("should conflict error w/ same code voucher",async () => {
+    const voucher = { id: 1, code: "VCHR123456", discount: 10, used: false };
+    jest
+      .spyOn(voucherRepository, "getVoucherByCode")
+      .mockResolvedValueOnce(voucher);
+
+    const response = voucherService.createVoucher(voucher.code, voucher.discount)
+    
+  })
 })
